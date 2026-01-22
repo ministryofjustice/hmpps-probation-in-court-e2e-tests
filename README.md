@@ -24,7 +24,7 @@ playwright official website: https://playwright.dev/docs/intro
 
 ### Project Folder Structure:
     hmpps-probation-in-court-e2e-tests-service
-    > e2e_tests/ – actual test specs. 
+    > e2e_tests/tests – actual test specs. 
     > fixtures - Contains setup hooks and shared context (e.g. login states, mock servers) used across tests.
     > pages - Implements the Page Object Model, encapsulating UI selectors and actions for maintainable test abstraction.
     > test-data - Stores test data inputs, payloads, and reusable datasets for parameterized scenarios.
