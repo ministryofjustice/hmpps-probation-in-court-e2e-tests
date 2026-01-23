@@ -1,8 +1,121 @@
-# hmpps-probation-in-court-e2e-tests-service
+# hmpps-probation-in-court-e2e-tests
 
-This repository contains automated E2E API-UI tests for the hmpps-probation-in-court-e2e-tests-service. The tests are written in TypeScript and use the Playwright testing library.
+This repository contains a structured, scalable end‑to‑end automation framework built using **Playwright (TypeScript)**. It is designed to support three core test types: 
+- **API tests** 
+- **UI tests** 
+- **E2E hybrid tests** (API → UI journeys) 
+
+Each test type is further separated into **happy** and **unhappy** paths for clarity, reporting accuracy, and long‑term maintainability.
 
 playwright official website: https://playwright.dev/docs/intro
+
+## Folder Structure
+
+e2e-tests/ - actual test specs
+tests/
+api/
+happy/
+unhappy/
+ui/
+happy/
+unhappy/
+e2e/
+happy/
+unhappy/
+
+fixtures/ - Contains setup hooks and shared context (e.g. login states, mock servers) used across tests.
+utils/ - Hosts helper functions, custom assertions, and reusable logic to keep tests clean and DRY.
+pages/ - Implements the Page Object Model, encapsulating UI selectors and actions for maintainable test abstraction.
+test-data/ - Stores test data inputs, payloads, and reusable datasets for parameterized scenarios. 
+config/ - – environment configs, secrets references
+
+### Test Types
+| Type | Description |
+|------|-------------|
+| **API** | Backend-only tests using Playwright’s APIRequestContext |
+| **UI** | Browser-based tests validating frontend behaviour |
+| **E2E** | Full journeys combining API setup + UI validation |
+
+### Scenario Types
+| Scenario | Description |
+|----------|-------------|
+| **Happy** | Expected, successful flows |
+| **Unhappy** | Negative, error, or edge-case flows |
+
+---
+
+## Naming Conventions
+
+| Test Type | File Suffix |
+|-----------|-------------|
+| API | `.api.ts` |
+| UI | `.ui.ts` |
+| E2E | `.e2e.ts` |
+
+Example:
+api-get-user.happy.ts
+ui-login.unhappy.ts
+e2e-create-user.happy.ts
+
+
+## Running Tests
+
+### Run all tests
+
+npx playwright test
+
+### Run only API tests
+
+npx playwright test --project=api-tests
+
+### Run only UI tests
+
+npx playwright test --project=ui-tests
+
+### Run only E2E tests
+
+npx playwright test --project=e2e-tests
+
+
+---
+
+## Environment Variables
+
+Environment variables are loaded via `.env` and used for:
+
+- Base URLs
+- Authentication tokens
+- Credentials
+- Environment-specific configuration
+
+---
+
+## Reporting
+
+Allure report is enabled by default:
+
+npm run allure:serve
+
+---
+
+## Future Enhancements
+
+- Shared error response validator for unhappy paths  
+- Contract testing layer  
+- CI pipeline matrix for API/UI/E2E separation  
+- Test data builders for dynamic payload generation  
+
+---
+
+## Tech Stack
+
+- **Playwright** (TypeScript)
+- **Node.js**
+- **dotenv**
+- **Page Object Model** (for UI)
+- **API client utilities** (for backend tests)
+
+---
 
 ## Getting Started:
 
@@ -16,20 +129,11 @@ playwright official website: https://playwright.dev/docs/intro
 
     git clone - Clone the repository
                 Navigate to the project directory
-    cd  hmpps-probation-in-court-e2e-tests-service
+    cd  hmpps-probation-in-court-e2e-tests
 
 ### Install the dependencies:
 
-    npm ci
-
-### Project Folder Structure:
-    hmpps-probation-in-court-e2e-tests-service
-    > e2e_tests/tests – actual test specs. 
-    > fixtures - Contains setup hooks and shared context (e.g. login states, mock servers) used across tests.
-    > pages - Implements the Page Object Model, encapsulating UI selectors and actions for maintainable test abstraction.
-    > test-data - Stores test data inputs, payloads, and reusable datasets for parameterized scenarios.
-    > utils - Hosts helper functions, custom assertions, and reusable logic to keep tests clean and DRY.
-    > config/ – environment configs, secrets references  
+    npm ci  
 
 ### Running the Tests:
 
@@ -73,10 +177,6 @@ playwright official website: https://playwright.dev/docs/intro
 
   npm run test:debug                - This command opens a browser window as well as the Playwright Inspector. 
                                       You can use the step over button at the top of the inspector to step through your test.                           
-
-### allure-results:
-
-This project captures allure report after the execution.(To view: npm run allure:serve)
 
 ### tags:
 

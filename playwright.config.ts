@@ -4,9 +4,6 @@ import { defineConfig, devices } from '@playwright/test';
 
 dotenv.config();
 
-const isHeadless = process.env.HEADLESS === 'true';
-console.log('Running in HEADLESS mode:', isHeadless);
-
 export default defineConfig({
   testDir: './e2e_tests',
   /* Run tests in files in parallel */
@@ -19,9 +16,9 @@ export default defineConfig({
   //workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
-    ['html'], 
-    ['list'], 
-    ['allure-playwright', { resultsDir: 'allure-results' }]
+    //['html', { open: 'never' }],
+    //['list', { open: 'never' }],
+    ['allure-playwright', { resultsDir: 'allure-results' }],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -39,12 +36,28 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: {
-        headless: isHeadless,
-        ...devices['Desktop Chrome'],
-      },
+      name: 'api-tests',
+      testMatch: /.*\.api\.ts/,
     },
+    {
+      name: 'ui-tests',
+      testMatch: /.*\.ui\.ts/,
+      use: { browserName: 'chromium' },
+    },
+    {
+      name: 'e2e-tests',
+      testMatch: /.*\.e2e\.ts/,
+      use: { browserName: 'chromium' },
+    },
+
+    // projects: [
+    //   {
+    //     name: 'chromium',
+    //     use: {
+    //       headless: isHeadless,
+    //       ...devices['Desktop Chrome'],
+    //     },
+    //   },
 
     // {
     //   name: 'firefox',
