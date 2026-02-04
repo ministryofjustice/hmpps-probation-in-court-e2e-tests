@@ -5,7 +5,7 @@ import { defineConfig, devices } from '@playwright/test';
 dotenv.config();
 
 export default defineConfig({
-  testDir: './e2e_tests',
+  testDir: './e2e_tests/tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -18,7 +18,14 @@ export default defineConfig({
   reporter: [
     //['html', { open: 'never' }],
     //['list', { open: 'never' }],
-    ['allure-playwright', { resultsDir: 'allure-results' }],
+    [
+      'allure-playwright',
+      {
+        detail: true,
+        outputFolder: 'allure-results',
+        suiteTitle: false,
+      },
+    ],
   ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
@@ -37,58 +44,64 @@ export default defineConfig({
   projects: [
     {
       name: 'api-tests',
-      testMatch: /.*\.api\.ts/,
+      use: {
+        headless: true, // force headless so --headed doesn't break API tests
+      },
+      testMatch: [/.*\.api\.ts$/],
+      outputDir: 'allure-results/api',
     },
     {
       name: 'ui-tests',
-      testMatch: /.*\.ui\.ts/,
+      testMatch: [/.*\.ui\.ts$/],
       use: { browserName: 'chromium' },
+      outputDir: 'allure-results/ui',
     },
     {
       name: 'e2e-tests',
-      testMatch: /.*\.e2e\.ts/,
+      testMatch: [/.*\.e2e\.ts$/],
       use: { browserName: 'chromium' },
+      outputDir: 'allure-results/e2e',
     },
-
-    // projects: [
-    //   {
-    //     name: 'chromium',
-    //     use: {
-    //       headless: isHeadless,
-    //       ...devices['Desktop Chrome'],
-    //     },
-    //   },
-
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
+
+  // projects: [
+  //   {
+  //     name: 'chromium',
+  //     use: {
+  //       headless: isHeadless,
+  //       ...devices['Desktop Chrome'],
+  //     },
+  //   },
+
+  // {
+  //   name: 'firefox',
+  //   use: { ...devices['Desktop Firefox'] },
+  // },
+
+  // {
+  //   name: 'webkit',
+  //   use: { ...devices['Desktop Safari'] },
+  // },
+
+  /* Test against mobile viewports. */
+  // {
+  //   name: 'Mobile Chrome',
+  //   use: { ...devices['Pixel 5'] },
+  // },
+  // {
+  //   name: 'Mobile Safari',
+  //   use: { ...devices['iPhone 12'] },
+  // },
+
+  /* Test against branded browsers. */
+  // {
+  //   name: 'Microsoft Edge',
+  //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
+  // },
+  // {
+  //   name: 'Google Chrome',
+  //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+  // },
 
   /* Run your local dev server before starting the tests */
   // webServer: {

@@ -1,11 +1,10 @@
-import { expect, test } from '@fixtures/auth-fixture';
+import { expect, test } from '@fixtures/api-auth-fixture';
 
 import { apiTestData } from '@test-data/api.test-data';
-import { describe } from 'node:test';
 
-describe(`Court Case Service – API Contract and Behaviour Tests`, () => {
+test.describe(`Court Case Service – API Contract and Behaviour Tests`, () => {
   test(`GET /hearing/hearingid - A invalid hearingid returns a response with a
-  status code of 404 @smoke @api @regression @pic-5097`, async ({ apiClient, authToken }) => {
+  status code of 404 - @smoke @api @regression @pic-5097`, async ({ apiClient, authToken }) => {
     const response = await apiClient.get(`/hearing/${apiTestData.invalidHearingId}`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
