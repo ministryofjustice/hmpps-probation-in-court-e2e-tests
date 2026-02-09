@@ -30,32 +30,32 @@ test-data/ - Stores test data inputs, payloads, and reusable datasets for parame
 config/ - – environment configs, secrets references
 
 ### Test Types
-| Type | Description |
-|------|-------------|
-| **API** | Backend-only tests using Playwright’s APIRequestContext |
-| **UI** | Browser-based tests validating frontend behaviour |
-| **E2E** | Full journeys combining API setup + UI validation |
+| Type      | Description                                             |
+|-----------|---------------------------------------------------------|
+| **API**   | Backend-only tests using Playwright’s APIRequestContext |
+| **UI**    | Browser-based tests validating frontend behaviour       |
+| **E2E**   | Full journeys combining API setup + UI validation       |
 
 ### Scenario Types
-| Scenario | Description |
-|----------|-------------|
-| **Happy** | Expected, successful flows |
-| **Unhappy** | Negative, error, or edge-case flows |
+| Scenario      | Description                         |
+|-------------- |-------------------------------------|
+| **Happy**     | Expected, successful flows          |
+| **Unhappy**   | Negative, error, or edge-case flows |
 
----
+-------------------------------------------------------
 
 ## Naming Conventions
 
 | Test Type | File Suffix |
 |-----------|-------------|
-| API | `.api.ts` |
-| UI | `.ui.ts` |
-| E2E | `.e2e.ts` |
+| API       | `.api.ts`   |
+| UI        | `.ui.ts`    |
+| E2E       | `.e2e.ts`   |
 
 Example:
-api-get-user.happy.ts
-ui-login.unhappy.ts
-e2e-create-user.happy.ts
+get-user.api.ts
+login.ui.ts
+create-user.e2e.ts
 
 
 ## Running Tests
@@ -87,6 +87,8 @@ Environment variables are loaded via `.env` and used for:
 - Authentication tokens
 - Credentials
 - Environment-specific configuration
+
+Populate your `.env` file using the values and structure provided in `.env.example`.
 
 ---
 
@@ -145,18 +147,10 @@ npm run allure:serve
   npm run build                     - To build the project(tsconfig.json) - This will compile your .ts files
                                       into the dist folder as specified in your tsconfig.json.
 
-  npm run test:smoke:chrome         - Run a Specific Test Case by Tag Name in headless mode - this is to run the smoke test.
-
-  npm run test:chrome               - Runs tests only in Chromium headless and Cleans old reports
-                                      Generates fresh Allure results
-
-  npm run test:chrome:headed        - Runs tests only in Chromium headed mode and Cleans old reports
-                                      Generates fresh Allure results
-
+  npm run test                      - Runs all tests across every Playwright project in headless mode.
                                                  
-  npm run test --headed             - To run the tests on all browsers in headed mode
-
-  npm run report                    - To view the HTML report
+  npm run test:headed               - Runs all tests across every Playwright project in headed mode, opening the browser 
+                                      for UI/E2E tests while API tests remain headless.
 
   npm run allure:serve              - To view the allure report
 

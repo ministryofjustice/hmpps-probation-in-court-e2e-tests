@@ -1,1 +1,0 @@
-test-data/ - used for storing any static test data.
